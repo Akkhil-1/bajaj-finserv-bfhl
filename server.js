@@ -1,71 +1,77 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
+
 app.use(express.json());
-const isLetter = (char) => /^[a-zA-Z]$/.test(char);
-const isDigit = (char) => /^[0-9]$/.test(char);
-const toAlternatingCaps = (str) => {
-    return str
+
+const isAlphabet = (char) => /^[a-zA-Z]$/.test(char);
+const isNumeric = (char) => /^[0-9]$/.test(char);
+
+const convertToAlternatingCaps = (inputString) => {
+    return inputString
         .split('')
         .map((char, index) => index % 2 === 0 ? char.toUpperCase() : char.toLowerCase())
         .join('');
 };
+
 app.post('/bfhl', (req, res) => {
     const { data } = req.body;
 
     if (!Array.isArray(data)) {
         return res.status(400).json({
             is_success: false,
-            message: "Input 'data' must be an array."
+            message: "'data' must be an array."
         });
     }
 
     const oddNumbers = [];
     const evenNumbers = [];
-    const alphabets = [];
-    const specialCharacters = [];
-    let sum = 0;
-    let allAlphabetsConcat = "";
+    const alphabetList = [];
+    const specialCharList = [];
+    let numberSum = 0;
+    let combinedAlphabets = "";
 
-    data.forEach(item => {
-        const strItem = String(item);
-        const num = Number(strItem);
+    data.forEach(element => {
+        const item = String(element);
+        const parsedNumber = Number(item);
 
-        if (!isNaN(num)) {
-            if (num % 2 === 0) {
-                evenNumbers.push(strItem);
+        if (!isNaN(parsedNumber)) {
+            if (parsedNumber % 2 === 0) {
+                evenNumbers.push(item);
             } else {
-                oddNumbers.push(strItem);
+                oddNumbers.push(item);
             }
-            sum += num;
-        } else if (strItem.length === 1 && isLetter(strItem)) {
-            alphabets.push(strItem.toUpperCase());
-            allAlphabetsConcat += strItem;
-        } else if (/^[a-zA-Z]+$/.test(strItem)) {
-            alphabets.push(strItem.toUpperCase());
-            allAlphabetsConcat += strItem;
+            numberSum += parsedNumber;
+        } else if (item.length === 1 && isAlphabet(item)) {
+            alphabetList.push(item.toUpperCase());
+            combinedAlphabets += item;
+        } else if (/^[a-zA-Z]+$/.test(item)) {
+            alphabetList.push(item.toUpperCase());
+            combinedAlphabets += item;
         } else {
-            specialCharacters.push(strItem);
+            specialCharList.push(item);
         }
     });
 
-    const reversedConcat = allAlphabetsConcat.split('').reverse().join('');
-    const concat_string = toAlternatingCaps(reversedConcat);
-    const response = {
+    const reversedAlphabets = combinedAlphabets.split('').reverse().join('');
+    const alternatedCapsString = convertToAlternatingCaps(reversedAlphabets);
+
+    const responsePayload = {
         is_success: true,
         user_id: "akhil_acharya_26112002",
         email: "akhil1216.be22@chitkara.edu.in",
         roll_number: "2210991216",
         odd_numbers: oddNumbers,
         even_numbers: evenNumbers,
-        alphabets: alphabets,
-        special_characters: specialCharacters,
-        sum: String(sum),
-        concat_string: concat_string
+        alphabets: alphabetList,
+        special_characters: specialCharList,
+        sum: String(numberSum),
+        concat_string: alternatedCapsString
     };
 
-    res.status(200).json(response);
+    res.status(200).json(responsePayload);
 });
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
