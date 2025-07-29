@@ -1,4 +1,4 @@
-# BFHL API - Bajaj Finserv Hackathon Submission
+# BFHL API - Bajaj Finserv Submission
 
 This is a simple Node.js + Express API built for the **Bajaj Finserv Hackathon**.
 
