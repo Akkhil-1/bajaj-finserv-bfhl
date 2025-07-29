@@ -1,7 +1,5 @@
 # BFHL API - Bajaj Finserv Submission
 
-This is a simple Node.js + Express API built for the **Bajaj Finserv Hackathon**.
-
 The API processes an array of mixed input and returns:
 
 - Odd and even numbers
