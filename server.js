@@ -53,9 +53,9 @@ app.post('/bfhl', (req, res) => {
     });
 
     const reversedAlphabets = combinedAlphabets.split('').reverse().join('');
-    const alternatedCapsString = convertToAlternatingCaps(reversedAlphabets);
+    const alternateCapsString = convertToAlternatingCaps(reversedAlphabets);
 
-    const responsePayload = {
+    const payload = {
         is_success: true,
         user_id: "akhil_acharya_26112002",
         email: "akhil1216.be22@chitkara.edu.in",
@@ -65,10 +65,10 @@ app.post('/bfhl', (req, res) => {
         alphabets: alphabetList,
         special_characters: specialCharList,
         sum: String(numberSum),
-        concat_string: alternatedCapsString
+        concat_string: alternateCapsString
     };
 
-    res.status(200).json(responsePayload);
+    res.status(200).json(payload);
 });
 
 app.listen(PORT, () => {
