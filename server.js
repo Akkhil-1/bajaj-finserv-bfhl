@@ -5,7 +5,6 @@ const PORT = 3000;
 app.use(express.json());
 
 const isAlphabet = (char) => /^[a-zA-Z]$/.test(char);
-const isNumeric = (char) => /^[0-9]$/.test(char);
 
 const convertToAlternatingCaps = (inputString) => {
     return inputString
